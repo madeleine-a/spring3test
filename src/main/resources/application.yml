@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: spring3-test
+  profiles:
+    active: local
+    group:
+      local: development,local-override # Create application-local-override.yml for your own stuff
+      dev: development
+      release: solace
+      local-docker: solace,  local-docker, local-override
+  datasource:
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://0.0.0.0:5432/spring3
+      username: spring3_user
+      password: spring3_user
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_schema: spring3
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
+  flyway:
+    clean-disabled: true
+    user: spring3
+    password: spring3
+    enabled: false
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    default-schema:  ${spring.jpa.properties.hibernate.default_schema}
+    placeholders:
+      in-test: true
+
+solace:
+  jms:
+    host: localhost:55554
+    username: admin
+    password: admin
+    vpn: default
+    maxRetries: 2
+
+
+logging:
+  level:
+    root: INFO
+    com.solacesystems: info
