@@ -67,42 +67,10 @@ SOLACE_HOST=$1
 healthCheck
 
 # Clean up
-deleteQueue responsible-communication.konto
-deleteQueue responsible-communication.konto.dmq
-deleteQueue responsible-communication.konto.retry.delayed
-deleteQueue responsible-communication.selfexclusion
-deleteQueue responsible-communication.selfexclusion.dmq
-deleteQueue responsible-communication.selfexclusion.retry.delayed
-deleteQueue responsible-communication.selfexclusion.stats
-deleteQueue responsible-communication.selfexclusion.stats.dmq
-deleteQueue responsible-communication.optins.test
+deleteQueue spring3-test.queue
+
 
 # Setup queues
-createQueue responsible-communication.konto.dmq 0 "#DEAD_MSG_QUEUE" false false
-createQueue responsible-communication.konto 0 "responsible-communication.konto.dmq" false false
-createQueue responsible-communication.konto.retry.delayed 1 "responsible-communication.konto" true false
-
-createQueue responsible-communication.selfexclusion.dmq 0 "#DEAD_MSG_QUEUE" false false
-createQueue responsible-communication.selfexclusion 0 "responsible-communication.selfexclusion.dmq" false false
-createQueue responsible-communication.selfexclusion.retry.delayed 600 "responsible-communication.selfexclusion" true false
-
-createQueue responsible-communication.selfexclusion.stats.dmq 0 "#DEAD_MSG_QUEUE" false false
-createQueue responsible-communication.selfexclusion.stats 0 "responsible-communication.selfexclusion.stats.dmq" false false
-
-createQueue responsible-communication.optins.test.dmq 0 "#DEAD_MSG_QUEUE" false false
-createQueue responsible-communication.optins.test 0 "responsible-communication.optins.test.dmq" false false
-createQueue responsible-communication.optins.test.retry.delayed 30 "responsible-communication.optins.test" false false
-
-
-# Setup Queue subscriptions
-subscribeToTopic responsible-communication.konto "atg-konto/consent/optin"
-subscribeToTopic responsible-communication.konto "atg-konto/account/statuschange"
-subscribeToTopic responsible-communication.konto "atg-konto/account/deleted"
-subscribeToTopic responsible-communication.konto "atg-konto/account/created"
-
-subscribeToTopic responsible-communication.selfexclusion "atg-service-responsible-gambling/event/restriction/selfexclusion/>"
-
-subscribeToTopic responsible-communication.selfexclusion.stats "atg-service-responsible-gambling/statistics/selfexclusion"
-
-subscribeToTopic responsible-communication.optins.test "responsible-communication/optin"
-subscribeToTopic responsible-communication.optins.test "responsible-communication/optin/delete"
+createQueue spring3-test.queue.dmq 0 "#DEAD_MSG_QUEUE" false false
+createQueue spring3-test.queue 0 "spring3-test.queue.dmq" false false
+createQueue spring3-test.queue.retry.delayed 1 "spring3-test.queue" true false

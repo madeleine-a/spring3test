@@ -2,39 +2,30 @@ spring:
   application:
     name: spring3-test
   profiles:
-    active: local
+    active: local-oracle
     group:
-      local: development,local-override # Create application-local-override.yml for your own stuff
-      dev: development
-      release: solace
-      local-docker: solace,  local-docker, local-override
+      local-oracle: oracle-db
   datasource:
-    hikari:
-      driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://0.0.0.0:5432/spring3
-      username: spring3_user
-      password: spring3_user
+    url: jdbc:postgresql://0.0.0.0:5432/spring3
+    username: spring3
+    password: spring3
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
-        default_schema: spring3
-        jdbc:
-          lob:
-            non_contextual_creation: true
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    show-sql: true
+        default_schema: ${spring.datasource.username}
+    show-sql: false
+    open-in-view: false
   flyway:
-    clean-disabled: true
-    user: spring3
-    password: spring3
-    enabled: false
+    clean-disabled: false
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    enabled: true
     baseline-on-migrate: true
-    locations: classpath:db/migration
-    default-schema:  ${spring.jpa.properties.hibernate.default_schema}
-    placeholders:
-      in-test: true
+    locations: classpath:db/migration/postgres
+
 
 solace:
   jms:
@@ -49,3 +40,10 @@ logging:
   level:
     root: INFO
     com.solacesystems: info
+
+---
+spring.config.activate.on-profile: postgres-db
+spring:
+  flyway:
+    default-schema:  ${spring.jpa.properties.hibernate.default_schema}
+

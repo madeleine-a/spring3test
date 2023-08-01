@@ -12,10 +12,10 @@ import java.util.*
 
 
 @Entity
-data class InstantEntity(val date_value: Instant) {
+data class InstantWithZoneEntity(val dateValue: Instant) {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null // Actually NOT NULL in DB
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Long? = null // Actually NOT NULL in DB
 
     @CreationTimestamp
     var created: Instant = Instant.now()

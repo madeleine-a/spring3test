@@ -1,4 +1,4 @@
-package se.atg.service.rcs.config
+package se.mad.config
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy

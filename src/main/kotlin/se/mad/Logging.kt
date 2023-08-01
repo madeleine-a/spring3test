@@ -1,4 +1,4 @@
-package se.atg.service.rcs.config
+package se.mad
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger

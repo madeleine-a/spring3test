@@ -8,10 +8,10 @@ import java.util.*
 
 
 @Entity
-data class OffsetDateWithZoneTimeEntity(val date_value: OffsetDateTime) {
+data class OffsetDateTimeWithZoneEntity(val dateValue: OffsetDateTime) {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null // Actually NOT NULL in DB
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Long? = null // Actually NOT NULL in DB
     
     @CreationTimestamp
     var created: OffsetDateTime = OffsetDateTime.now()

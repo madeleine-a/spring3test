@@ -1,25 +1,25 @@
 package se.mad.db
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.util.*
 
 
 @Entity
-data class LocalDateTimeEntity(val date_value: LocalDateTime) {
+data class OffsetDateTimeEntity(val dateValue: OffsetDateTime) {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null // Actually NOT NULL in DB
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Long? = null // Actually NOT NULL in DB
     
     @CreationTimestamp
-    var created: LocalDateTime = LocalDateTime.now()
+    var created: OffsetDateTime = OffsetDateTime.now()
 
     @UpdateTimestamp
-    var updated: LocalDateTime = LocalDateTime.now()
+    var updated: OffsetDateTime = OffsetDateTime.now()
+
+    @Version
+    var version: Long = 0
 
 }
