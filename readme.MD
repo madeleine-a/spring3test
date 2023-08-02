@@ -11,7 +11,7 @@ has.
 
 There are som tests in this repo that can be used to look at the behavior, both with and without these settings. 
 Some tests will never work (findByTimestamp), they just show how timestamp is handled when using oracle. 
-But the test deleting and finding on a period of time shows the problem quite load. 
+But the test deleting and finding on a period of time shows the problem quite clear. 
 
 When not setting these properties, they fail miserable.  
 
