@@ -180,6 +180,105 @@ internal class DbServiceTest {
     }
 
     @Test
+    fun saveAndFindLocalDateTimeDbRounded() {
+        val dateValue = LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = localDateTimeEntityRepository.save(LocalDateTimeEntity(dateValue))
+        val found = localDateTimeEntityRepository.findFirstByDateValue(dateValue)
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindInstantDbRounded() {
+        instantEntityRepository.deleteAllInBatch()
+        val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = instantEntityRepository.save(InstantEntity(dateValue))
+        val found = instantEntityRepository.findFirstByDateValue(dateValue)
+        val all = instantEntityRepository.findAll()
+        assertEquals(saved,all.first{it.dateValue == dateValue})
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindInstantWithSixDbRounded() {
+        val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = instantWithSixEntityRepository.save(InstantWithSixEntity(dateValue))
+        val found = instantWithSixEntityRepository.findFirstByDateValue(dateValue)
+        val all = instantWithSixEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+
+
+    @Test
+    fun saveAndFindInstantWithZoneDbRounded() {
+        val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = instantWithZoneEntityRepository.save(InstantWithZoneEntity(dateValue))
+        val found = instantWithZoneEntityRepository.findFirstByDateValue(dateValue)
+        val all = instantWithZoneEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindOffsetDateTimeDbRounded() {
+        val dateValue = OffsetDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = offsetDateTimeEntityRepository.save(OffsetDateTimeEntity(dateValue))
+        val found = offsetDateTimeEntityRepository.findFirstByDateValue(dateValue)
+
+        val all = offsetDateTimeEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindOffsetDateTimeWithZoneDbRounded() {
+        val dateValue = OffsetDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = offsetDateTimeWithZoneEntityRepository.save(OffsetDateTimeWithZoneEntity(dateValue))
+        val found = offsetDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
+
+        val all = offsetDateTimeWithZoneEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindZonedDateTimeDbRounded() {
+        val dateValue = ZonedDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = zonedDateTimeEntityRepository.save(ZonedDateTimeEntity(dateValue))
+        val found = zonedDateTimeEntityRepository.findFirstByDateValue(dateValue)
+
+        val all = zonedDateTimeEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun saveAndFindZonedDateTimeWithZoneDbRounded() {
+        val dateValue = ZonedDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val saved = zonedDateTimeWithZoneEntityRepository.save(ZonedDateTimeWithZoneEntity(dateValue))
+        val found = zonedDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
+
+        val all = zonedDateTimeWithZoneEntityRepository.findAll()
+        assertEquals(saved,all.first())
+        assertEquals(saved, found)
+    }
+
+    @Test
+    fun deleteLocalDateTimeEntityByDateValueDbRounded() {
+        val dateValue = LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
+        val dateValueOld = LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS).minus(10, ChronoUnit.MINUTES)
+
+        val list = mutableListOf<LocalDateTimeEntity>()
+        repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValue)) }
+        repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValueOld)) }
+        localDateTimeEntityRepository.saveAllAndFlush(list)
+        val result =
+            localDateTimeEntityRepository.deleteAllByDateValueBefore(LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS).minus(5, ChronoUnit.MINUTES))
+        assertEquals(10, result)
+    }
+
+    @Test
     fun deleteLocalDateTimeEntityByDateValue() {
         val dateValue = LocalDateTime.now()
         val dateValueOld = LocalDateTime.now().minus(10, ChronoUnit.MINUTES)
