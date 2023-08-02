@@ -11,6 +11,21 @@ has.
 
 There are som tests in this repo that can be used to look at the behavior, both with and without these settings. 
 
+**The tests deleting and finding on a period of time shows the problem quite clear.** 
+
+When not setting these properties, they fail miserable, when setting them, tests are running OK.  
+
+```
+spring:  
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Europe/Stockholm
+        type:
+          preferred_instant_jdbc_type: TIMESTAMP
+```
+
 Some tests will never work (findByTimestamp), they just show how timestamp is handled when using oracle, and not really the problem with TIMESTAMP_UTC. 
 The above was true "on my machine", that is a PC, Win 10 with:
 ```
@@ -30,21 +45,6 @@ When running code in the workflow/IT-tests instant is represented like this:
 When running code on OCP instant is represented like this:
 '2023-08-02T13:06:07.154042242Z'
 
-**But the test deleting and finding on a period of time shows the problem quite clear.** 
-
-When not setting these properties, they fail miserable.  
-
-```
-spring:  
-  jpa:
-    properties:
-      hibernate:
-        jdbc:
-          time_zone: Europe/Stockholm
-        type:
-          preferred_instant_jdbc_type: TIMESTAMP
-```
-
 You can also change and run on a postgres (change active profile to local) and start the docker container
 and look at the behavior.
 
@@ -61,7 +61,6 @@ working but all tests were OK. This has nothing to do with the Spring 3 migratio
 In this case we need to set the TZ=Europe/Stockholm on both the service and the integration-tests.
 
 TZ is set to Europe/Stockholm on all our deployments on OCP. 
-
 
 
 ## Database - Oracle
