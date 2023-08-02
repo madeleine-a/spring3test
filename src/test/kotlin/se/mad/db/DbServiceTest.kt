@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.annotation.Commit
 import java.time.*
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 
 @DataJpaTest(properties = ["spring.flyway.enabled = false"])
@@ -84,6 +85,11 @@ internal class DbServiceTest {
         val saved = instantEntityRepository.save(InstantEntity(dateValue))
         val found = instantEntityRepository.findFirstByDateValue(dateValue)
         val all = instantEntityRepository.findAll()
+        println(TimeZone.getDefault())
+        println(dateValue)
+        println(saved)
+        println(all)
+        println(found)
         assertEquals(saved,all.first{it.dateValue == dateValue})
         assertEquals(saved, found)
     }
