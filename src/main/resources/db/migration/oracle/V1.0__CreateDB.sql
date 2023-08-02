@@ -16,7 +16,14 @@ create table instant_entity
     id NUMBER GENERATED ALWAYS AS IDENTITY primary key
 );
 
-
+create table instant_with_six_entity
+(
+    created    timestamp not null,
+    date_value timestamp(6) not null,
+    updated    timestamp not null,
+    version    number not null,
+    id NUMBER GENERATED ALWAYS AS IDENTITY primary key
+);
 
 create table offset_date_time_entity
 (
