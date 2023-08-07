@@ -9,7 +9,7 @@ Today after migration doing the same at the same time saves a timestamp like '20
 This you can get around by setting preffered type on the driver, and also tell the driver which timezone the database
 has. 
 
-There are som tests in this repo that can be used to look at the behavior, both with and without these settings. 
+There are some tests in this repo that can be used to look at the behavior, both with and without these settings. 
 
 **The tests deleting and finding on a period of time shows the problem quite clear.** 
 

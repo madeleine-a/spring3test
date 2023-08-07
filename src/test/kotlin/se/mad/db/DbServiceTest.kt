@@ -415,6 +415,21 @@ internal class DbServiceTest {
     }
 
     @Test
+    fun findInstantByValueBetweenV2() {
+        val dateValue = Instant.now().minus(70, ChronoUnit.MINUTES)
+        instantEntityRepository.saveAndFlush(InstantEntity(dateValue))
+        val from = Instant.now().minus(2, ChronoUnit.HOURS)
+        val to = Instant.now().minus(1, ChronoUnit.HOURS)
+        val found = instantEntityRepository.findAllByDateValueBetween(from, to)
+
+        val fromOff = Instant.now().minus(4, ChronoUnit.HOURS)
+        val toOff = Instant.now().minus(2, ChronoUnit.HOURS)
+        val foundOffTime = instantEntityRepository.findAllByDateValueBetween(fromOff, toOff)
+        assertEquals(0, foundOffTime.size)
+        assertEquals(1, found.size)
+    }
+
+    @Test
     fun findInstantWithZoneByValueBetween() {
         val dateValue = Instant.now()
         val list = mutableListOf<InstantWithZoneEntity>()
