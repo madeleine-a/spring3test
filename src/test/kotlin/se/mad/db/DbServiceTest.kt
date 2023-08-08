@@ -1,6 +1,7 @@
 package se.mad.db
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.Import
 import org.springframework.test.annotation.Commit
 import java.time.*
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
 
@@ -101,10 +103,10 @@ internal class DbServiceTest {
      */
     @Test
     fun saveAndFindTruncatedInstant() {
-        instantEntityRepository.deleteAllInBatch()
         val dateValue = Instant.now().truncatedTo(ChronoUnit.MICROS)
         println(dateValue)
         val saved = instantEntityRepository.save(InstantEntity(dateValue))
+        em.clear()
         val found = instantEntityRepository.findFirstByDateValue(dateValue)
         val all = instantEntityRepository.findAll()
         assertEquals(saved,all.first{it.dateValue == dateValue})
@@ -123,6 +125,7 @@ internal class DbServiceTest {
     fun saveAndFindInstantWithSix() {
         val dateValue = Instant.now()
         val saved = instantWithSixEntityRepository.save(InstantWithSixEntity(dateValue))
+        em.clear()
         val found = instantWithSixEntityRepository.findFirstByDateValue(dateValue)
         val all = instantWithSixEntityRepository.findAll()
         assertEquals(saved,all.first())
@@ -135,6 +138,7 @@ internal class DbServiceTest {
     fun saveAndFindInstantWithZone() {
         val dateValue = Instant.now()
         val saved = instantWithZoneEntityRepository.save(InstantWithZoneEntity(dateValue))
+        em.clear()
         val found = instantWithZoneEntityRepository.findFirstByDateValue(dateValue)
         val all = instantWithZoneEntityRepository.findAll()
         assertEquals(saved,all.first())
@@ -145,6 +149,7 @@ internal class DbServiceTest {
     fun saveAndFindOffsetDateTime() {
         val dateValue = OffsetDateTime.now()
         val saved = offsetDateTimeEntityRepository.save(OffsetDateTimeEntity(dateValue))
+        em.clear()
         val found = offsetDateTimeEntityRepository.findFirstByDateValue(dateValue)
 
         val all = offsetDateTimeEntityRepository.findAll()
@@ -156,6 +161,7 @@ internal class DbServiceTest {
     fun saveAndFindOffsetDateTimeWithZone() {
         val dateValue = OffsetDateTime.now()
         val saved = offsetDateTimeWithZoneEntityRepository.save(OffsetDateTimeWithZoneEntity(dateValue))
+        em.clear()
         val found = offsetDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
 
         val all = offsetDateTimeWithZoneEntityRepository.findAll()
@@ -167,6 +173,7 @@ internal class DbServiceTest {
     fun saveAndFindZonedDateTime() {
         val dateValue = ZonedDateTime.now()
         val saved = zonedDateTimeEntityRepository.save(ZonedDateTimeEntity(dateValue))
+        em.clear()
         val found = zonedDateTimeEntityRepository.findFirstByDateValue(dateValue)
 
         val all = zonedDateTimeEntityRepository.findAll()
@@ -178,6 +185,7 @@ internal class DbServiceTest {
     fun saveAndFindZonedDateTimeWithZone() {
         val dateValue = ZonedDateTime.now()
         val saved = zonedDateTimeWithZoneEntityRepository.save(ZonedDateTimeWithZoneEntity(dateValue))
+        em.clear()
         val found = zonedDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
 
         val all = zonedDateTimeWithZoneEntityRepository.findAll()
@@ -189,6 +197,7 @@ internal class DbServiceTest {
     fun saveAndFindLocalDateTimeDbRounded() {
         val dateValue = LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = localDateTimeEntityRepository.save(LocalDateTimeEntity(dateValue))
+        em.clear()
         val found = localDateTimeEntityRepository.findFirstByDateValue(dateValue)
         assertEquals(saved, found)
     }
@@ -198,6 +207,7 @@ internal class DbServiceTest {
         instantEntityRepository.deleteAllInBatch()
         val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = instantEntityRepository.save(InstantEntity(dateValue))
+        em.clear()
         val found = instantEntityRepository.findFirstByDateValue(dateValue)
         val all = instantEntityRepository.findAll()
         assertEquals(saved,all.first{it.dateValue == dateValue})
@@ -208,6 +218,7 @@ internal class DbServiceTest {
     fun saveAndFindInstantWithSixDbRounded() {
         val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = instantWithSixEntityRepository.save(InstantWithSixEntity(dateValue))
+        em.clear()
         val found = instantWithSixEntityRepository.findFirstByDateValue(dateValue)
         val all = instantWithSixEntityRepository.findAll()
         assertEquals(saved,all.first())
@@ -220,6 +231,7 @@ internal class DbServiceTest {
     fun saveAndFindInstantWithZoneDbRounded() {
         val dateValue = Instant.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = instantWithZoneEntityRepository.save(InstantWithZoneEntity(dateValue))
+        em.clear()
         val found = instantWithZoneEntityRepository.findFirstByDateValue(dateValue)
         val all = instantWithZoneEntityRepository.findAll()
         assertEquals(saved,all.first())
@@ -230,6 +242,7 @@ internal class DbServiceTest {
     fun saveAndFindOffsetDateTimeDbRounded() {
         val dateValue = OffsetDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = offsetDateTimeEntityRepository.save(OffsetDateTimeEntity(dateValue))
+        em.clear()
         val found = offsetDateTimeEntityRepository.findFirstByDateValue(dateValue)
 
         val all = offsetDateTimeEntityRepository.findAll()
@@ -241,6 +254,7 @@ internal class DbServiceTest {
     fun saveAndFindOffsetDateTimeWithZoneDbRounded() {
         val dateValue = OffsetDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = offsetDateTimeWithZoneEntityRepository.save(OffsetDateTimeWithZoneEntity(dateValue))
+        em.clear()
         val found = offsetDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
 
         val all = offsetDateTimeWithZoneEntityRepository.findAll()
@@ -252,6 +266,7 @@ internal class DbServiceTest {
     fun saveAndFindZonedDateTimeDbRounded() {
         val dateValue = ZonedDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = zonedDateTimeEntityRepository.save(ZonedDateTimeEntity(dateValue))
+        em.clear()
         val found = zonedDateTimeEntityRepository.findFirstByDateValue(dateValue)
 
         val all = zonedDateTimeEntityRepository.findAll()
@@ -263,6 +278,7 @@ internal class DbServiceTest {
     fun saveAndFindZonedDateTimeWithZoneDbRounded() {
         val dateValue = ZonedDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS)
         val saved = zonedDateTimeWithZoneEntityRepository.save(ZonedDateTimeWithZoneEntity(dateValue))
+        em.clear()
         val found = zonedDateTimeWithZoneEntityRepository.findFirstByDateValue(dateValue)
 
         val all = zonedDateTimeWithZoneEntityRepository.findAll()
@@ -279,6 +295,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValue)) }
         repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValueOld)) }
         localDateTimeEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result =
             localDateTimeEntityRepository.deleteAllByDateValueBefore(LocalDateTime.now().plusNanos(500).truncatedTo(ChronoUnit.MICROS).minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
@@ -293,6 +310,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValue)) }
         repeat(10) { _ -> list.add(LocalDateTimeEntity(dateValueOld)) }
         localDateTimeEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result =
             localDateTimeEntityRepository.deleteAllByDateValueBefore(LocalDateTime.now().minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
@@ -307,6 +325,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(InstantEntity(dateValue)) }
         repeat(10) { _ -> list.add(InstantEntity(dateValueOld)) }
         instantEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result = instantEntityRepository.deleteAllByDateValueBefore(Instant.now().minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
     }
@@ -320,6 +339,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(InstantWithZoneEntity(dateValue)) }
         repeat(10) { _ -> list.add(InstantWithZoneEntity(dateValueOld)) }
         instantWithZoneEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result =
             instantWithZoneEntityRepository.deleteAllByDateValueBefore(Instant.now().minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
@@ -335,6 +355,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(OffsetDateTimeEntity(dateValueOld)) }
 
         offsetDateTimeEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result =
             offsetDateTimeEntityRepository.deleteAllByDateValueBefore(OffsetDateTime.now().minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
@@ -349,6 +370,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(OffsetDateTimeWithZoneEntity(dateValue)) }
         repeat(10) { _ -> list.add(OffsetDateTimeWithZoneEntity(dateValueOld)) }
         offsetDateTimeWithZoneEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result = offsetDateTimeWithZoneEntityRepository.deleteAllByDateValueBefore(
             OffsetDateTime.now().minus(5, ChronoUnit.MINUTES)
         )
@@ -365,6 +387,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(ZonedDateTimeEntity(dateValueOld)) }
 
         zonedDateTimeEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result =
             zonedDateTimeEntityRepository.deleteAllByDateValueBefore(ZonedDateTime.now().minus(5, ChronoUnit.MINUTES))
         assertEquals(10, result)
@@ -379,6 +402,7 @@ internal class DbServiceTest {
         repeat(10) { _ -> list.add(ZonedDateTimeWithZoneEntity(dateValue)) }
         repeat(10) { _ -> list.add(ZonedDateTimeWithZoneEntity(dateValueOld)) }
         zonedDateTimeWithZoneEntityRepository.saveAllAndFlush(list)
+        em.clear()
         val result = zonedDateTimeWithZoneEntityRepository.deleteAllByDateValueBefore(
             ZonedDateTime.now().minus(5, ChronoUnit.MINUTES)
         )
@@ -393,6 +417,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(LocalDateTimeEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         localDateTimeEntityRepository.saveAll(list)
+        em.clear()
         val all = localDateTimeEntityRepository.findAll()
         val from = LocalDateTime.now().minus(2, ChronoUnit.HOURS)
         val to = LocalDateTime.now().minus(1, ChronoUnit.HOURS)
@@ -407,6 +432,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(InstantEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         instantEntityRepository.saveAll(list)
+        em.clear()
         val all = instantEntityRepository.findAll()
         val from = Instant.now().minus(2, ChronoUnit.HOURS)
         val to = Instant.now().minus(1, ChronoUnit.HOURS)
@@ -416,8 +442,12 @@ internal class DbServiceTest {
 
     @Test
     fun findInstantByValueBetweenV2() {
+        val timeZone = TimeZone.getDefault()
+        println(timeZone)
+
         val dateValue = Instant.now().minus(70, ChronoUnit.MINUTES)
         instantEntityRepository.saveAndFlush(InstantEntity(dateValue))
+        em.clear()
         val from = Instant.now().minus(2, ChronoUnit.HOURS)
         val to = Instant.now().minus(1, ChronoUnit.HOURS)
         val found = instantEntityRepository.findAllByDateValueBetween(from, to)
@@ -433,11 +463,82 @@ internal class DbServiceTest {
     fun findInstantByValueBetweenV3() {
         val dateValue = Instant.now()
         instantEntityRepository.saveAndFlush(InstantEntity(dateValue))
+        em.clear()
         val from = Instant.now().minus(1, ChronoUnit.HOURS)
         val to = Instant.now().plus(1, ChronoUnit.HOURS)
         val found = instantEntityRepository.findAllByDateValueBetween(from, to)
         assertEquals(1, found.size)
     }
+
+    @Test
+    fun findInstantByValueBetweenSistaSommartiden() {
+        val str = "2023-10-29T02:28:00.000000+02:00"
+        val dateValue = Instant.parse(str)
+        instantEntityRepository.saveAndFlush(InstantEntity(dateValue))
+        em.clear()
+        val from = Instant.now().minus(1, ChronoUnit.HOURS)
+        val to = Instant.now().plus(1, ChronoUnit.HOURS)
+        val found = instantEntityRepository.findAllByDateValueBetween(
+            dateValue.minus(1, ChronoUnit.HOURS),
+            dateValue.plus(1, ChronoUnit.HOURS)
+        )
+        val all = instantEntityRepository.findAll()
+        assertEquals(1, found.size)
+    }
+
+    @Test
+    fun findInstantByValueBetweenVintertid() {
+        val str = "2023-10-29T02:28:00.000000+01:00"
+        val dateValue = Instant.parse(str)
+        instantEntityRepository.saveAndFlush(InstantEntity(dateValue))
+        em.clear()
+        val from = Instant.now().minus(1, ChronoUnit.HOURS)
+        val to = Instant.now().plus(1, ChronoUnit.HOURS)
+        val found = instantEntityRepository.findAllByDateValueBetween(
+            dateValue.minus(1, ChronoUnit.HOURS),
+            dateValue.plus(1, ChronoUnit.HOURS)
+        )
+        val all = instantEntityRepository.findAll()
+        assertEquals(1, found.size)
+    }
+
+    @Test
+    fun findInstantByValueBetweenSommartidV2() {
+        val str = "2023-10-29T00:28:00.000000Z"
+        val str2 = "2023-10-29T01:28:00.000000Z"
+        val dateValue = Instant.parse(str)
+        val dateValue2 = Instant.parse(str2)
+        instantEntityRepository.save(InstantEntity(dateValue))
+        instantEntityRepository.saveAndFlush(InstantEntity(dateValue2))
+        em.clear()
+        val found = instantEntityRepository.findAllByDateValueBetween(
+            dateValue.minus(1, ChronoUnit.HOURS),
+            dateValue.plus(1, ChronoUnit.HOURS)
+        )
+        val all = instantEntityRepository.findAll()
+        println(all[0].dateValue)
+        println(all[1].dateValue)
+        assertNotEquals(all[0].dateValue, all[1].dateValue)
+
+    }
+
+    @Test
+    fun findInstantByValueBetweenSommartidV3() {
+        val str = "2023-10-29T02:28:00.000000+01:00"
+        val str2 = "2023-10-29T02:28:00.000000+02:00"
+        val dateValue = Instant.parse(str)
+        val dateValue2 = Instant.parse(str2)
+        instantEntityRepository.save(InstantEntity(dateValue))
+        instantEntityRepository.saveAndFlush(InstantEntity(dateValue2))
+        em.clear()
+        val found = instantEntityRepository.findAllByDateValueBetween(
+            dateValue.minus(1, ChronoUnit.HOURS),
+            dateValue.plus(1, ChronoUnit.HOURS)
+        )
+        val all = instantEntityRepository.findAll()
+        assertNotEquals(all[0].dateValue, all[1].dateValue)
+    }
+
 
     @Test
     fun findInstantWithZoneByValueBetween() {
@@ -446,6 +547,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(InstantWithZoneEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         instantWithZoneEntityRepository.saveAll(list)
+        em.clear()
         val all = instantWithZoneEntityRepository.findAll()
         val from = Instant.now().minus(2, ChronoUnit.HOURS)
         val to = Instant.now().minus(1, ChronoUnit.HOURS)
@@ -460,6 +562,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(InstantWithSixEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         instantWithSixEntityRepository.saveAll(list)
+        em.clear()
         val all = instantWithSixEntityRepository.findAll()
         val from = Instant.now().minus(2, ChronoUnit.HOURS)
         val to = Instant.now().minus(1, ChronoUnit.HOURS)
@@ -474,6 +577,8 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(OffsetDateTimeEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         offsetDateTimeEntityRepository.saveAll(list)
+
+        em.clear()
         val all = offsetDateTimeEntityRepository.findAll()
         val from = OffsetDateTime.now().minus(2, ChronoUnit.HOURS)
         val to = OffsetDateTime.now().minus(1, ChronoUnit.HOURS)
@@ -488,6 +593,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(OffsetDateTimeWithZoneEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         offsetDateTimeWithZoneEntityRepository.saveAll(list)
+        em.clear()
         val all = offsetDateTimeWithZoneEntityRepository.findAll()
         val from = OffsetDateTime.now().minus(2, ChronoUnit.HOURS)
         val to = OffsetDateTime.now().minus(1, ChronoUnit.HOURS)
@@ -503,6 +609,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(ZonedDateTimeEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         zonedDateTimeEntityRepository.saveAll(list)
+        em.clear()
         val all = zonedDateTimeEntityRepository.findAll()
         val from = ZonedDateTime.now().minus(2, ChronoUnit.HOURS)
         val to = ZonedDateTime.now().minus(1, ChronoUnit.HOURS)
@@ -517,6 +624,7 @@ internal class DbServiceTest {
         (0 until 10).forEach { list.add(ZonedDateTimeWithZoneEntity(dateValue.minus((it*10).toLong(), ChronoUnit.MINUTES))) }
         // 6 entities within the last hour and 4 more that are one hour or more old.
         zonedDateTimeWithZoneEntityRepository.saveAll(list)
+        em.clear()
         val all = zonedDateTimeWithZoneEntityRepository.findAll()
         val from = ZonedDateTime.now().minus(2, ChronoUnit.HOURS)
         val to = ZonedDateTime.now().minus(1, ChronoUnit.HOURS)
