@@ -18,10 +18,10 @@ import java.util.*
 @Entity
 data class JsonEntity (
     @JdbcType(CustomJsonAsStringJdbcType::class)
-    var trapp: Trapp,
+    var trapp: Trapp, // VARCHAR2
 
     @JdbcType(CustomJsonAsStringJdbcType::class)
-    var trappLista: TrappLista,
+    var trappLista: TrappLista, // CLOB
 
     @JdbcTypeCode(SqlTypes.TIMESTAMP)
     var dateValue: Instant,
