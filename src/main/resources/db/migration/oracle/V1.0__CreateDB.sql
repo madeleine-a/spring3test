@@ -1,3 +1,10 @@
+create table json_holder (
+    id NUMBER GENERATED ALWAYS AS IDENTITY primary key,
+    aggregate blob,
+    CHECK (aggregate is json),
+    check (json_value(aggregate, '$.attribute1') is not null)
+);
+
 create table json_entity
 (
     trapp varchar2(1000) not null,
