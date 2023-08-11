@@ -49,6 +49,7 @@ class JsonEntityTest {
     @Test
     @Commit
     fun saveJsonEmbedded(){
+        jsonHolderRepository.deleteAllInBatch()
         val holder = JsonHolder(EmbeddableAggregate(1, "Hejhopp"))
         jsonHolderRepository.saveAndFlush(holder)
 
