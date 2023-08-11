@@ -33,10 +33,12 @@ dependencies {
         exclude(group = "com.oracle.database.jdbc", module = "ons")
     }
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 }
 
 dependencyManagement {

@@ -1,3 +1,12 @@
+create table json_entity
+(
+    trapp varchar2(1000) not null,
+    vanlig_string varchar2(1000) not null,
+    trapp_lista clob,
+    date_value timestamp,
+    id NUMBER GENERATED ALWAYS AS IDENTITY primary key
+);
+
 create table local_date_time_entity
 (
     created    timestamp not null,
